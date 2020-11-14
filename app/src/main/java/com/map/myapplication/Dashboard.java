@@ -1,11 +1,12 @@
 package com.map.myapplication;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,13 +15,24 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Dashboard extends AppCompatActivity {
 
-    private static final int CAMERA_REQUEST=9999;
+    private static final int IMAGE_REQUEST=1;
+
+    String currentImagePath=null;
+
+    Button displayBtn;
     ImageView help,capture;
     TextView tv;
     Animation topAnim;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,10 +41,25 @@ public class Dashboard extends AppCompatActivity {
         topAnim= AnimationUtils.loadAnimation(this,R.anim.top_anim);
         tv=findViewById(R.id.textView);
         tv.setAnimation(topAnim);
+        displayBtn=findViewById(R.id.disbtn);
+        displayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(currentImagePath != null && !currentImagePath.isEmpty()) {
+                    Toast.makeText(Dashboard.this, currentImagePath, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(Dashboard.this, Result.class);
+                    intent.putExtra("image_paths", currentImagePath);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(Dashboard.this, "No image captured", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         help=findViewById(R.id.help);
         help.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent intent=new Intent(Dashboard.this,HowToUse.class);
                 startActivity(intent);
             }
@@ -41,21 +68,41 @@ public class Dashboard extends AppCompatActivity {
         capture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent1,CAMERA_REQUEST);
+                Intent cameraIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                if(cameraIntent.resolveActivity(getPackageManager())!=null)
+                {
+                    File imageFile=null;
+                    try {
+                        imageFile=getImageFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    if(imageFile!=null)
+                    {
+                        Uri imageUri=FileProvider.getUriForFile(Dashboard.this,"com.map.myapplication.fileprovider",imageFile);
+                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
+                        startActivityForResult(cameraIntent,IMAGE_REQUEST);
+                    }
+                }
             }
         });
+
+
+    }
+    private File getImageFile() throws IOException
+    {
+        String timeStamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageName="jpg_"+timeStamp+"_";
+        File storageDir=getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        File imageFile=File.createTempFile(imageName,".jpg",storageDir);
+        currentImagePath=imageFile.getAbsolutePath();
+        return imageFile;
+
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==CAMERA_REQUEST){
-            Bitmap bitmap=(Bitmap)data.getExtras().get("data");
-            //capture.setImageBitmap(bitmap);
-            Intent intent2=new Intent(Dashboard.this,Result.class);
-            intent2.putExtra("Bitmap",bitmap);
-            startActivity(intent2);
-        }
-    }
+
+
 }

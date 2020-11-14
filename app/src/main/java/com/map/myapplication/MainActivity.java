@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static int SPLASH_SCREEN=4000;// Duration of splash screen
+    private static int SPLASH_SCREEN=3500;// Duration of splash screen
 
     //variables
     Animation topAnim,bottomAnim;//Animation objects
