@@ -1,5 +1,6 @@
 package com.map.myapplication;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
@@ -42,6 +43,8 @@ public class Dashboard extends AppCompatActivity {
         tv=findViewById(R.id.textView);
         tv.setAnimation(topAnim);
         displayBtn=findViewById(R.id.disbtn);
+        displayBtn.setVisibility(View.INVISIBLE);
+        displayBtn.setActivated(false);
         displayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,6 +106,43 @@ public class Dashboard extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_CANCELED){
+            currentImagePath=null;
+        }
+        else if(resultCode==RESULT_OK){
+            displayBtn.setActivated(true);
+            displayBtn.setVisibility(View.VISIBLE);
+        }
+    }
 
+    /*@Override
+    protected void onResume() {
+        super.onResume();
+        displayBtn.setActivated(false);
+        displayBtn.setVisibility(View.INVISIBLE);
+    }*/
 
+    /*@Override
+    protected void onRestart() {
+        super.onRestart();
+        displayBtn.setActivated(false);
+        displayBtn.setVisibility(View.INVISIBLE);
+    }*/
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        displayBtn.setActivated(false);
+        displayBtn.setVisibility(View.INVISIBLE);
+    }
+
+ /*   @Override
+    protected void onStop() {
+        super.onStop();
+        displayBtn.setActivated(false);
+        displayBtn.setVisibility(View.INVISIBLE);
+    }*/
 }
