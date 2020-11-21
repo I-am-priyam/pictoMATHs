@@ -25,11 +25,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);//To remove the title bar from top //Goto res->values->styles-><style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         setContentView(R.layout.activity_main);
-        topAnim= AnimationUtils.loadAnimation(this,R.anim.top_anim);
-        bottomAnim= AnimationUtils.loadAnimation(this,R.anim.bottom_anim);
+        topAnim = AnimationUtils.loadAnimation(this,R.anim.top_anim);
+        bottomAnim = AnimationUtils.loadAnimation(this,R.anim.bottom_anim);
 
-        logo=findViewById(R.id.logo);
-        title=findViewById(R.id.title);
+        logo = findViewById(R.id.logo);
+        title = findViewById(R.id.title);
 
         logo.setAnimation(topAnim);
         title.setAnimation(bottomAnim);

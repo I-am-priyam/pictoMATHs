@@ -30,7 +30,7 @@ public class Dashboard extends AppCompatActivity {
     String currentImagePath=null;
 
     Button displayBtn;
-    ImageView help,capture;
+    ImageView help,capture,cal;
     TextView tv;
     Animation topAnim;
 
@@ -42,6 +42,14 @@ public class Dashboard extends AppCompatActivity {
         topAnim= AnimationUtils.loadAnimation(this,R.anim.top_anim);
         tv=findViewById(R.id.textView);
         tv.setAnimation(topAnim);
+        cal=findViewById(R.id.cal);
+        cal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent idiot = new Intent(Dashboard.this,Calc.class);
+                startActivity(idiot);
+            }
+        });
         displayBtn=findViewById(R.id.disbtn);
         displayBtn.setVisibility(View.INVISIBLE);
         displayBtn.setActivated(false);

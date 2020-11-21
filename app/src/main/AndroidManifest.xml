@@ -9,7 +9,8 @@
         android:roundIcon="@drawable/logoo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Result"></activity>
+        <activity android:name=".Calc"></activity>
+        <activity android:name=".Result" />
         <activity android:name=".HowToUse" />
         <activity android:name=".Dashboard" />
         <activity android:name=".MainActivity">
@@ -23,6 +24,7 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.map.myapplication.fileprovider"
@@ -30,15 +32,16 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_path"></meta-data>
+                android:resource="@xml/file_path" />
         </provider>
     </application>
 
-    <uses-feature android:name="android.hardware.camera2.full"
-        android:required="true"/>
-    <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-feature
+        android:name="android.hardware.camera2.full"
+        android:required="true" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>
