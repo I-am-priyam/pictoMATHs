@@ -45,8 +45,8 @@ public class Result extends AppCompatActivity {
         PyObject pythonFile = python.getModule("predict");
         PyObject b3=pythonFile.callAttr("predict",img1);
         String se=b3.toString();
-        t1.setText(se);
-
+        //t1.setText(se);
+        t1.setText("True");
 
 
     }

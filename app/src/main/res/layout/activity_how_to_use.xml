@@ -44,7 +44,7 @@
             android:id="@+id/step3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/step1"
+            android:src="@drawable/step3"
             android:layout_gravity="center"/>
 
         <ImageView
@@ -52,7 +52,7 @@
             android:id="@+id/step4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/step2"
+            android:src="@drawable/step4"
             android:layout_gravity="center"/>
 
 
